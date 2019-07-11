@@ -114,6 +114,8 @@ figure ('Name','Range from First FFT')
 plot(single_side_sig_fft1); 
 axis ([0 200 0 1]);
 ```
+* Simulation Result
+<img src="results/Fig1_Range_from_First_FFT.bmp" width="700" />
 
 #### 6. Range Doppler Response
 * The 2D FFT implementation is already provided here. 
@@ -122,7 +124,7 @@ axis ([0 200 0 1]);
 * The output of the 2D FFT is an image that has reponse in the range and doppler FFT bins. 
 * So, it is important to convert the axis from bin sizes to range and doppler based on their Max values.
 ```
-Mix=reshape(Mix,[Nr,Nd]);
+Mix = reshape(Mix,[Nr,Nd]);
 ```
 * 2D FFT using the FFT size for both dimensions.
 ```
@@ -142,6 +144,8 @@ range_axis = linspace(-200,200,Nr/2)*((Nr/2)/400);
 figure ('Name','Range and Speed From FFT2')
 surf(doppler_axis,range_axis,RDM);
 ```
+* Simulation Result
+<img src="results/Fig2_Range_and_Speed_From_FFT2.bmp" width="700" />
 
 #### 7. CFAR implementation
 * Slide Window through the complete Range Doppler Map
@@ -155,7 +159,7 @@ Td = 8;
 Gr = 4;
 Gd = 4;
 ```
-% Offset the threshold by SNR value in dB
+* Offset the threshold by SNR value in dB
 ```
 offset = 1.4;
 ```
@@ -213,14 +217,5 @@ figure('Name','CA-CFAR Filtered RDM')
 surf(doppler_axis,range_axis,RDM);
 colorbar;
 ```
-
-## Output:
-
-#### 5. Range Measurement
-<img src="results/Fig1_Range_from_First_FFT.bmp" width="700" />
-
-#### 6. Range Doppler Response
-<img src="results/Fig2_Range_and_Speed_From_FFT2.bmp" width="700" />
-
-#### 7. CFAR implementation
+* Simulation Result
 <img src="results/Fig3_CA-CFAR_Filtered_RDM.bmp" width="700" />
