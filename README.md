@@ -220,9 +220,9 @@ colorbar;
 
 #### 5. Range Measurement
 <img src="results/Fig1_Range_from_First_FFT.bmp" width="700" />
-<br>
+
 #### 6. Range Doppler Response
 <img src="results/Fig2_Range_and_Speed_From_FFT2.bmp" width="700" />
-<br>
+
 #### 7. CFAR implementation
 <img src="results/Fig3_CA-CFAR_Filtered_RDM.bmp" width="700" />
