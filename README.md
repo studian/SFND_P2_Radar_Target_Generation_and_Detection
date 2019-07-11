@@ -8,35 +8,32 @@ Udacity, Sensor Fusion, Project of Radar Target Generation and Detection
 
 ---
 #### 1. Radar Specifications 
+* Frequency of operation = 77GHz
+* Max Range = 200m
+* Range Resolution = 1 m
+* Max Velocity = 100 m/s
 ```
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Frequency of operation = 77GHz
-% Max Range = 200m
-% Range Resolution = 1 m
-% Max Velocity = 100 m/s
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Max_Range_of_Radar = 200; 
 Max_Velocity_of_Radar = 100;
 Range_Resolution_of_Radar = 1;
-%speed of light = 3e8
 speed_of_light = 3e8;
 ```
 
 #### 2. User Defined Range and Velocity of target
+
+* define the target's initial position and velocity. 
+* Note : Velocity remains contant
 ```
-% define the target's initial position and velocity. Note : Velocity
-% remains contant
 Range_of_target = 110; % Target Initial Range
 Velocity_of_target  = -20; % Target Velocity
 ```
 
 #### 3. FMCW Waveform Generation
 ```
-%Design the FMCW waveform by giving the specs of each of its parameters.
-% Calculate the Bandwidth (B), Chirp Time (Tchirp) and Slope (slope) of the FMCW
-% chirp using the requirements above.
+% Design the FMCW waveform by giving the specs of each of its parameters.
+% Calculate the Bandwidth (B), Chirp Time (Tchirp) and Slope (slope) of the FMCW chirp using the requirements above.
 
-%Operating carrier frequency of Radar 
+% Operating carrier frequency of Radar 
 fc= 77e9;             %carrier freq
 sweep_time_factor = 5.5;
 
