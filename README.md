@@ -2,7 +2,7 @@
 Udacity, Sensor Fusion, Project of Radar Target Generation and Detection
 
 ## Project Layout:
-<img src="media/ProjectLayout.JPG" width="700" />
+<img src="./ProjectLayout.JPG" width="700" />
 
 ## Implementation steps for the 2D CFAR process
 * Loop over elements of RDM array each iteration selecting one cell to be the CUT (Cell Under Test)<br>
@@ -30,8 +30,8 @@ This was done throught sclicing the output such that we have the surrounding row
 `RDM(:,union(1:(Td+Gd),end-(Td+Gd-1):end)) = 0;  % Columns`
 
 ## Output:
-<img src="media/Fig1_Range_from_First_FFT.bmp" width="700" />
+<img src="results/Fig1_Range_from_First_FFT.bmp" width="700" />
 <br>
-<img src="media/Fig2_Range_and_Speed_From_FFT2.bmp" width="700" />
+<img src="results/Fig2_Range_and_Speed_From_FFT2.bmp" width="700" />
 <br>
-<img src="media/Fig3_CA-CFAR_Filtered_RDM.bmp" width="700" />
+<img src="results/Fig3_CA-CFAR_Filtered_RDM.bmp" width="700" />
