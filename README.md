@@ -29,90 +29,87 @@ Velocity_of_target  = -20; % Target Velocity
 ```
 
 #### 3. FMCW Waveform Generation
-```
-% Design the FMCW waveform by giving the specs of each of its parameters.
-% Calculate the Bandwidth (B), Chirp Time (Tchirp) and Slope (slope) of the FMCW chirp using the requirements above.
+* Design the FMCW waveform by giving the specs of each of its parameters.
+* Calculate the Bandwidth (B), Chirp Time (Tchirp) and Slope (slope) of the FMCW chirp using the requirements above.
 
-% Operating carrier frequency of Radar 
+* Operating carrier frequency of Radar 
+```
 fc= 77e9;             %carrier freq
 sweep_time_factor = 5.5;
 
 B      = speed_of_light / (2 * Range_Resolution_of_Radar); % Bandwidth of the FMCW, Bsweep 
 Tchirp = (sweep_time_factor*2*Max_Range_of_Radar)/speed_of_light; % Chirp Time of the FMCW
 slope  = B/Tchirp; % Slope of the FMCW
-                                                          
-%The number of chirps in one sequence. Its ideal to have 2^ value for the ease of running the FFT
-%for Doppler Estimation. 
-Nd=128;                   % #of doppler cells OR #of sent periods % number of chirps
-
-%The number of samples on each chirp. 
-Nr=1024;                  %for length of time OR # of range cells
-
-% Timestamp for running the displacement scenario for every sample on each
-% chirp
+```                                                          
+* The number of chirps in one sequence. Its ideal to have 2^ value for the ease of running the FFT for Doppler Estimation. 
+```
+Nd=128;                   % # of doppler cells OR # of sent periods % number of chirps
+```
+* The number of samples on each chirp. 
+```
+Nr=1024;                  % for length of time OR # of range cells
+```
+* Timestamp for running the displacement scenario for every sample on each chirp
+```
 t=linspace(0,Nd*Tchirp,Nr*Nd); %total time for samples
-
-%Creating the vectors for Tx, Rx and Mix based on the total samples input.
+```
+* Creating the vectors for Tx, Rx and Mix based on the total samples input.
+```
 Tx=zeros(1,length(t)); %transmitted signal
 Rx=zeros(1,length(t)); %received signal
 Mix = zeros(1,length(t)); %beat signal
-
-%Similar vectors for range_covered and time delay.
+```
+* Similar vectors for range_covered and time delay.
+```
 r_t=zeros(1,length(t)); % range_covered
 td=zeros(1,length(t)); % time delay
 ```
+
 #### 4. Signal generation and Moving Target simulation
 ```
 for i=1:length(t)         
        
-    % *%TODO* :
-    %For each time stamp update the Range of the Target for constant velocity.     
+    % For each time stamp update the Range of the Target for constant velocity.     
     r_t(i) = Range_of_target + (Velocity_of_target*t(i)); % range_covered
     td(i) = (2*r_t(i)) / speed_of_light; % time delay
     
-    % *%TODO* :
-    %For each time sample we need update the transmitted and
-    %received signal.
+    % For each time sample we need update the transmitted and received signal.
     Tx(i) = cos( 2*pi*( fc*(t(i)        ) + ( 0.5 * slope * t(i)^2)         ) );
     Rx(i) = cos( 2*pi*( fc*(t(i)-td(i)  ) + ( 0.5 * slope * (t(i)-td(i))^2) ) );
     
-    % *%TODO* :
-    %Now by mixing the Transmit and Receive generate the beat signal
-    %This is done by element wise matrix multiplication of Transmit and
-    %Receiver Signal
+    % Now by mixing the Transmit and Receive generate the beat signal
+    % This is done by element wise matrix multiplication of Transmit and Receiver Signal
     Mix(i) = Tx(i).*Rx(i); 
 end
 ```
 
 #### 5. Range Measurement
+
+* Reshape the vector into Nr*Nd array. 
+* Nr and Nd here would also define the size of Range and Doppler FFT respectively.
 ```
-%reshape the vector into Nr*Nd array. Nr and Nd here would also define the size of
-%Range and Doppler FFT respectively.
 Mix = reshape(Mix,[Nr,Nd]);
-
- % *%TODO* :
-%run the FFT on the beat signal along the range bins dimension (Nr) and
+```
+* run the FFT on the beat signal along the range bins dimension (Nr) and
+```
 sig_fft1 = fft(Mix,Nr);  
-
-%normalize.
-%sig_fft1 = sig_fft1/max(max(sig_fft1));
+```
+* normalize.
+```
 sig_fft1 = sig_fft1./Nr;
-
- % *%TODO* :
-% Take the absolute value of FFT output
+```
+* Take the absolute value of FFT output
+```
 sig_fft1 = abs(sig_fft1);  
-
- % *%TODO* :
-% Output of FFT is double sided signal, but we are interested in only one side of the spectrum.
-% Hence we throw out half of the samples.
+```
+* Output of FFT is double sided signal, but we are interested in only one side of the spectrum.
+* Hence we throw out half of the samples.
+```
 single_side_sig_fft1 = sig_fft1(1:Nr/2);
-
-%plotting the range
+```
+* Plotting the range, plot FFT output 
+```
 figure ('Name','Range from First FFT')
-%subplot(2,1,1) 
-
- % *%TODO* :
- % plot FFT output 
 plot(single_side_sig_fft1); 
 axis ([0 200 0 1]);
 ```
